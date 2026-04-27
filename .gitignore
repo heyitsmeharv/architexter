@@ -1,0 +1,7 @@
+node_modules/
+dist/
+.preview/
+.vite-react-example/
+.vite-react-preview*.log
+.npm-cache/
+*.tgz

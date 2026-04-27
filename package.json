@@ -1,0 +1,81 @@
+{
+  "name": "architexter",
+  "version": "0.0.1",
+  "description": "Turn indented text outlines into flow, tree, branch, and React diagrams.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js"
+    },
+    "./react": {
+      "import": "./dist/react/index.js"
+    }
+  },
+  "files": [
+    "dist/index.js",
+    "dist/react/index.js",
+    "src",
+    "examples",
+    "README",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "rollup -c",
+    "example": "node examples/basic.js",
+    "preview:react": "npm run build && node scripts/preview-react.js",
+    "test": "npm run build && node tests/smoke.test.js",
+    "prepack": "npm run test",
+    "prepare": "husky",
+    "release": "commit-and-tag-version"
+  },
+  "peerDependencies": {
+    "react": ">=18",
+    "styled-components": ">=5"
+  },
+  "peerDependenciesMeta": {
+    "react": {
+      "optional": true
+    },
+    "styled-components": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^20.4.3",
+    "@commitlint/config-conventional": "^20.4.3",
+    "commit-and-tag-version": "^12.6.1",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.3.2",
+    "prettier": "^3.8.1",
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5",
+    "rollup": "^4.60.2",
+    "styled-components": "^6.4.1"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,json,md,yml,yaml}": [
+      "prettier --write"
+    ]
+  },
+  "keywords": [
+    "ascii",
+    "diagram",
+    "tree",
+    "flow",
+    "outline",
+    "react"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/heyitsmeharv/architexter.git"
+  },
+  "bugs": {
+    "url": "https://github.com/heyitsmeharv/architexter/issues"
+  },
+  "homepage": "https://github.com/heyitsmeharv/architexter#readme",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  }
+}
