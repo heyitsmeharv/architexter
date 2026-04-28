@@ -1,6 +1,6 @@
 {
   "name": "architexter",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Turn indented text outlines into flow, tree, branch, and React diagrams.",
   "type": "module",
   "main": "./dist/index.js",

@@ -29,7 +29,7 @@ const run = async () => {
   ]);
 
   assert.match(renderFlow(model), /POST \/events/);
-  assert.match(renderTree(model), /`-- App/);
+  assert.match(renderTree(model), /└── App/);
   assert.match(renderBranches(model), /Worker  -->  Database  <--  Dashboard/);
   assert.equal(renderArchitexter(source), renderFlow(model));
   assert.equal(renderArchitexter(source, "tree"), renderTree(model));
