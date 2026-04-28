@@ -144,17 +144,17 @@ const noteLine = (note) => `(${note})`;
 
 const renderTreeNode = (node, prefix = "", isLast = true, isRoot = false) => {
   const lines = [];
-  const connector = isLast ? "`-- " : "|-- ";
+  const connector = isLast ? "└── " : "├── ";
   const label = beautifyInlineArrows(node.label);
 
   lines.push(isRoot ? label : `${prefix}${connector}${label}`);
 
-  const nestedPrefix = isRoot ? "" : `${prefix}${isLast ? "    " : "|   "}`;
+  const nestedPrefix = isRoot ? "" : `${prefix}${isLast ? "    " : "│   "}`;
   const metaPrefix = isRoot ? "  " : nestedPrefix;
 
   node.annotations.forEach(({ kind, value }) => {
     if (kind === "flow")
-      lines.push(`${metaPrefix}|  ${beautifyInlineArrows(value)}`);
+      lines.push(`${metaPrefix}│  ${beautifyInlineArrows(value)}`);
     else if (kind === "note") lines.push(`${metaPrefix}${noteLine(value)}`);
     else lines.push(`${metaPrefix}[${kind}] ${value}`);
   });
@@ -183,15 +183,15 @@ export const renderTree = (model) =>
 const renderBranchSubtree = (node, prefix, lines) => {
   node.annotations.forEach(({ kind, value }) => {
     if (kind === "flow")
-      lines.push(`${prefix}|  ${beautifyInlineArrows(value)}`);
+      lines.push(`${prefix}│  ${beautifyInlineArrows(value)}`);
     else if (kind === "note") lines.push(`${prefix}${noteLine(value)}`);
     else lines.push(`${prefix}[${kind}] ${value}`);
   });
 
   node.children.forEach((child, index) => {
     const isLast = index === node.children.length - 1;
-    const connector = isLast ? "`-- " : "|-- ";
-    const childPrefix = `${prefix}${isLast ? "    " : "|   "}`;
+    const connector = isLast ? "└── " : "├── ";
+    const childPrefix = `${prefix}${isLast ? "    " : "│   "}`;
 
     lines.push(`${prefix}${connector}${beautifyInlineArrows(child.label)}`);
     renderBranchSubtree(child, childPrefix, lines);
@@ -201,14 +201,14 @@ const renderBranchSubtree = (node, prefix, lines) => {
 const renderFlowBranches = (children, indent, lines) => {
   children.forEach((child, index) => {
     const isLast = index === children.length - 1;
-    const connector = isLast ? "`-- " : "|-- ";
+    const connector = isLast ? "└── " : "├── ";
     const prefix = spaces(indent);
-    const childPrefix = `${prefix}${isLast ? "    " : "|   "}`;
+    const childPrefix = `${prefix}${isLast ? "    " : "│   "}`;
 
     lines.push(`${prefix}${connector}${beautifyInlineArrows(child.label)}`);
     renderBranchSubtree(child, childPrefix, lines);
 
-    if (!isLast) lines.push(`${prefix}|`);
+    if (!isLast) lines.push(`${prefix}│`);
   });
 };
 
@@ -224,21 +224,21 @@ const renderFlowNode = (node, indent, lines) => {
 
   const flowAnnotations = node.annotations.filter((a) => a.kind === "flow");
   if (flowAnnotations.length) {
-    lines.push(`${spaces(indent + 2)}|`);
+    lines.push(`${spaces(indent + 2)}│`);
     flowAnnotations.forEach(({ value }) => {
-      lines.push(`${spaces(indent + 2)}|  ${beautifyInlineArrows(value)}`);
+      lines.push(`${spaces(indent + 2)}│  ${beautifyInlineArrows(value)}`);
     });
   }
 
   if (node.children.length === 1) {
-    lines.push(`${spaces(indent + 2)}|`);
-    lines.push(`${spaces(indent + 2)}v`);
+    lines.push(`${spaces(indent + 2)}│`);
+    lines.push(`${spaces(indent + 2)}↓`);
     renderFlowNode(node.children[0], indent, lines);
     return;
   }
 
   if (node.children.length > 1) {
-    lines.push(`${spaces(indent + 2)}|`);
+    lines.push(`${spaces(indent + 2)}│`);
     renderFlowBranches(node.children, indent + 2, lines);
   }
 };
