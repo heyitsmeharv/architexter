@@ -150,7 +150,7 @@ const renderTreeNode = (node, prefix = "", isLast = true, isRoot = false) => {
   lines.push(isRoot ? label : `${prefix}${connector}${label}`);
 
   const nestedPrefix = isRoot ? "" : `${prefix}${isLast ? "    " : "│   "}`;
-  const metaPrefix = isRoot ? "  " : nestedPrefix;
+  const metaPrefix = isRoot ? "" : nestedPrefix;
 
   node.annotations.forEach(({ kind, value }) => {
     if (kind === "flow")
